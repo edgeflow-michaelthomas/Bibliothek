@@ -13,6 +13,12 @@ public class BibliothekMain {
 
         bibliothek.addToStock(book);
         bibliothek.addToStock(book2);
+        bibliothek.addToStock(MediumGenerator.generateDvd(bibliothek.getNextId()));
+        bibliothek.addToStock(MediumGenerator.generateDvd(bibliothek.getNextId()));
+        bibliothek.addToStock(MediumGenerator.generateDvd(bibliothek.getNextId()));
+        bibliothek.addToStock(MediumGenerator.generateDvd(bibliothek.getNextId()));
+        bibliothek.addToStock(MediumGenerator.generateDvd(bibliothek.getNextId()));
+        bibliothek.addToStock(MediumGenerator.generateDvd(bibliothek.getNextId()));
 
         bibliothek.printStock();
     }

@@ -2,6 +2,7 @@ package de.schulung.bibliothek.utilities;
 
 import de.schulung.bibliothek.enums.Language;
 import de.schulung.bibliothek.media.Book;
+import de.schulung.bibliothek.media.Dvd;
 import de.schulung.bibliothek.media.Medium;
 import net.datafaker.Faker;
 
@@ -22,5 +23,15 @@ public class MediumGenerator {
 
 
         return new Book(id, title, language, year, isbn, author, pages);
+    }
+
+    public static Medium generateDvd(int id) {
+        String title = faker.movie().name();
+        Language language = Language.ENGLISH;
+        int year = random.nextInt(1900, 2026);
+        String director = faker.name().fullName();
+        int length = random.nextInt(20, 300);
+
+        return new Dvd(id, title, language, year, director, length);
     }
 }
