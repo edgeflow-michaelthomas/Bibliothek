@@ -19,4 +19,17 @@ public class Dvd extends Medium {
     public int getLength() {
         return length;
     }
+
+    @Override
+    public String toString() {
+        return "Dvd{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", director='" + director + '\'' +
+                ", language=" + language +
+                ", year=" + year +
+                ", length=" + length +
+                ", isAvailable=" + isAvailable +
+                '}';
+    }
 }
