@@ -2,20 +2,20 @@ package de.schulung.bibliothek.administration;
 
 import de.schulung.bibliothek.media.Medium;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.time.LocalDate;
+import java.util.*;
 
 public class Bibliothek {
-    private final List<Medium> mediums =  new ArrayList<>();
+    private final Set<Medium> mediums =  new HashSet<>();
     private final Set<Member> members =  new HashSet<>();
+
+    private final Map<Member, List<Lending>> lendings =  new HashMap<>();
+
     private int currentMediumId = 0;
     private int currentMemberId = 0;
 
-
     public boolean addToStock(Medium medium){
-        if (!mediums.contains(medium)){
+        if (!mediums.contains(medium)) {
             mediums.add(medium);
             return true;
         }
@@ -55,4 +55,29 @@ public class Bibliothek {
         currentMemberId++;
         return currentMemberId;
     }
+
+    public boolean lendMedium(Member member, Medium medium, LocalDate lendingDate) {
+        /*
+        1. Member gibt es
+        2. Medium gibt es
+        3. Medium ist nicht ausgeliehen
+         */
+
+        if (members.contains(member) && mediums.contains(medium) && medium.isAvailable()) {
+            if (!lendings.containsKey(member)) {
+                lendings.put(member, new ArrayList<>());
+            }
+
+            Lending lending = new Lending(lendingDate, medium);
+            lendings.get(member).add(lending);
+            medium.setAvailable(false);
+
+            return true;
+        }
+        return false;
+    }
+
+//    public boolean returnMedium(Member member, Medium medium) {
+//        lendings.containsKey(member);
+//    }
 }
