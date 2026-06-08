@@ -2,6 +2,8 @@ package de.schulung.bibliothek;
 
 import de.schulung.bibliothek.administration.Bibliothek;
 import de.schulung.bibliothek.administration.Member;
+import de.schulung.bibliothek.exceptions.NotMemberOfTheLibraryException;
+import de.schulung.bibliothek.exceptions.NotRegisteredMediumException;
 import de.schulung.bibliothek.media.Medium;
 import de.schulung.bibliothek.utilities.MediumGenerator;
 import de.schulung.bibliothek.utilities.MemberGenerator;
@@ -24,23 +26,14 @@ public class BibliothekMain {
         bibliothek.addToStock(MediumGenerator.generateDvd(bibliothek.getNextMediumId()));
         bibliothek.addToStock(MediumGenerator.generateDvd(bibliothek.getNextMediumId()));
 
-        bibliothek.printStock();
-
         Member member1 = MemberGenerator.generateMember(bibliothek.getNextMemberId());
         Member member2 = MemberGenerator.generateMember(bibliothek.getNextMemberId());
         Member member3 = MemberGenerator.generateMember(bibliothek.getNextMemberId());
         bibliothek.addMember(member1);
         bibliothek.addMember(member2);
-        bibliothek.printMembers();
+        bibliothek.addMember(member3);
 
-        bibliothek.lendMedium(member1, book, LocalDate.now());
-        System.out.println();
-        System.out.println(bibliothek.getLendings(member1));
-
-//        System.out.println(book);
-//        bibliothek.returnMedium(member1, book);
-//        System.out.println(book);
-
-        System.out.println(bibliothek.lendMedium(member3, book, LocalDate.now()));
+        BibliothekConsole repl = new BibliothekConsole();
+        repl.start();
     }
 }
