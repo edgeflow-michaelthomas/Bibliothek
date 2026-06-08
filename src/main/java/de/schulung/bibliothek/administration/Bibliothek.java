@@ -1,5 +1,7 @@
 package de.schulung.bibliothek.administration;
 
+import de.schulung.bibliothek.exceptions.NotMemberOfTheLibraryException;
+import de.schulung.bibliothek.exceptions.NotRegisteredMediumException;
 import de.schulung.bibliothek.media.Medium;
 
 import java.time.LocalDate;
@@ -60,7 +62,7 @@ public class Bibliothek {
         return lendings.get(member);
     }
 
-    public boolean lendMedium(Member member, Medium medium, LocalDate lendingDate) {
+    public boolean lendMedium(Member member, Medium medium, LocalDate lendingDate) throws NotMemberOfTheLibraryException, NotRegisteredMediumException{
         /*
         1. Member gibt es
         2. Medium gibt es
@@ -68,15 +70,15 @@ public class Bibliothek {
          */
 
         if (!members.contains(member)) {
-            System.out.println(member.getFirstName() + " " + member.getLastName() + " is not registered at this library");
-            return false;
+            throw new NotMemberOfTheLibraryException(member.getFirstName() + " " + member.getLastName() + " is not registered at this library");
         }
+
         if (!mediums.contains(medium)) {
-            System.out.println(medium.getTitle() + " is not a registered medium at this library");
-            return false;
+            throw new NotRegisteredMediumException(medium.getTitle() + " is not a registered medium at this library");
         }
+
         if (!medium.isAvailable()) {
-            System.out.println(medium.getTitle() + " is already lended");
+            System.out.println(medium.getTitle() + " is already lent");
             return false;
         }
 
@@ -89,12 +91,18 @@ public class Bibliothek {
         medium.setAvailable(false);
 
         return true;
-
-
     }
 
-    public boolean returnMedium(Member member, Medium medium) {
-        if (!members.contains(member) || !mediums.contains(medium) || !lendings.containsKey(member)) {
+    public boolean returnMedium(Member member, Medium medium) throws NotMemberOfTheLibraryException, NotRegisteredMediumException{
+        if (!members.contains(member)) {
+            throw new NotMemberOfTheLibraryException(member.getFirstName() + " " + member.getLastName() + " is not registered at this library");
+        }
+
+        if (!mediums.contains(medium)) {
+            throw new NotRegisteredMediumException(medium.getTitle() + " is not a registered medium at this library");
+        }
+
+        if (!lendings.containsKey(member)) {
             return false;
         }
 
