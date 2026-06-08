@@ -56,6 +56,10 @@ public class Bibliothek {
         return currentMemberId;
     }
 
+    public List<Lending> getLendings(Member member) {
+        return lendings.get(member);
+    }
+
     public boolean lendMedium(Member member, Medium medium, LocalDate lendingDate) {
         /*
         1. Member gibt es
@@ -63,21 +67,65 @@ public class Bibliothek {
         3. Medium ist nicht ausgeliehen
          */
 
-        if (members.contains(member) && mediums.contains(medium) && medium.isAvailable()) {
-            if (!lendings.containsKey(member)) {
-                lendings.put(member, new ArrayList<>());
-            }
-
-            Lending lending = new Lending(lendingDate, medium);
-            lendings.get(member).add(lending);
-            medium.setAvailable(false);
-
-            return true;
+        if (!members.contains(member)) {
+            System.out.println(member.getFirstName() + " " + member.getLastName() + " is not registered at this library");
+            return false;
         }
-        return false;
+        if (!mediums.contains(medium)) {
+            System.out.println(medium.getTitle() + " is not a registered medium at this library");
+            return false;
+        }
+        if (!medium.isAvailable()) {
+            System.out.println(medium.getTitle() + " is already lended");
+            return false;
+        }
+
+        if (!lendings.containsKey(member)) {
+            lendings.put(member, new ArrayList<>());
+        }
+
+        Lending lending = new Lending(lendingDate, medium);
+        lendings.get(member).add(lending);
+        medium.setAvailable(false);
+
+        return true;
+
+
     }
 
-//    public boolean returnMedium(Member member, Medium medium) {
-//        lendings.containsKey(member);
-//    }
+    public boolean returnMedium(Member member, Medium medium) {
+        if (!members.contains(member) || !mediums.contains(medium) || !lendings.containsKey(member)) {
+            return false;
+        }
+
+        // variante A - mit for-each Schleife
+        List<Lending> memberLending = lendings.get(member);
+        for (Lending lending : memberLending) {
+            if (lending.getMedium().equals(medium)) {
+                memberLending.remove(lending);
+                medium.setAvailable(true);
+
+                // Wenn Mitglied nichts mehr ausgeliehen hat, dann entferne Eintrag aus Lendings-Map
+                if (lendings.get(member).isEmpty()) {
+                    lendings.remove(member);
+                }
+
+                return true;
+            }
+        }
+        return false;
+
+        // variante B - mit Lambdas
+//        boolean found = lendings.get(member).removeIf(lending -> lending.getMedium().equals(medium));
+//        if(found) {
+//
+//            medium.setAvailable(true);
+//            // Wenn Mitglied nichts mehr ausgeliehen hat, dann entferne Eintrag aus Lendings-Map
+//            if (lendings.get(member).isEmpty()) {
+//                lendings.remove(member);
+//            }
+//        }
+//
+//        return found;
+    }
 }

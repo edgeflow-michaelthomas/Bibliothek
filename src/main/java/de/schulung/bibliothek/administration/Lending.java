@@ -13,6 +13,14 @@ public class Lending {
         this.medium = medium;
     }
 
+    public LocalDate getLendingDate() {
+        return lendingDate;
+    }
+
+    public Medium getMedium() {
+        return medium;
+    }
+
     @Override
     public String toString() {
         return "Lending{" +
