@@ -2,13 +2,9 @@ package de.schulung.bibliothek;
 
 import de.schulung.bibliothek.administration.Bibliothek;
 import de.schulung.bibliothek.administration.Member;
-import de.schulung.bibliothek.exceptions.NotMemberOfTheLibraryException;
-import de.schulung.bibliothek.exceptions.NotRegisteredMediumException;
 import de.schulung.bibliothek.media.Medium;
 import de.schulung.bibliothek.utilities.MediumGenerator;
 import de.schulung.bibliothek.utilities.MemberGenerator;
-
-import java.time.LocalDate;
 
 public class BibliothekMain {
     public static void main(String[] args) {
@@ -26,6 +22,9 @@ public class BibliothekMain {
         bibliothek.addToStock(MediumGenerator.generateDvd(bibliothek.getNextMediumId()));
         bibliothek.addToStock(MediumGenerator.generateDvd(bibliothek.getNextMediumId()));
 
+        Member admin = new Member("CBM", "Paul", "Müller", "2000-11-15", "admin@cbm.de");
+        bibliothek.addMember(admin);
+
         Member member1 = MemberGenerator.generateMember(bibliothek.getNextMemberId());
         Member member2 = MemberGenerator.generateMember(bibliothek.getNextMemberId());
         Member member3 = MemberGenerator.generateMember(bibliothek.getNextMemberId());
@@ -33,7 +32,7 @@ public class BibliothekMain {
         bibliothek.addMember(member2);
         bibliothek.addMember(member3);
 
-        BibliothekConsole repl = new BibliothekConsole();
+        BibliothekConsole repl = new BibliothekConsole(bibliothek);
         repl.start();
     }
 }
