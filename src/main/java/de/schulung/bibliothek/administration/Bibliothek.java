@@ -58,6 +58,15 @@ public class Bibliothek {
         return currentMemberId;
     }
 
+    public Member findMemberById(String memberId) {
+        for (Member member : members) {
+            if (member.getId().equals(memberId)) {
+                return member;
+            }
+        }
+        return null;
+    }
+
     public List<Lending> getLendings(Member member) {
         return lendings.get(member);
     }
