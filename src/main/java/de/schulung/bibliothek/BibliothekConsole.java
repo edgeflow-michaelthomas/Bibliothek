@@ -2,9 +2,11 @@ package de.schulung.bibliothek;
 
 import de.schulung.bibliothek.administration.Bibliothek;
 import de.schulung.bibliothek.administration.Member;
+import de.schulung.bibliothek.media.Medium;
 
 import java.util.Locale;
 import java.util.Scanner;
+import java.util.Set;
 
 public class BibliothekConsole {
     private boolean running = false;
@@ -71,7 +73,12 @@ public class BibliothekConsole {
     }
 
     private void listMediums() {
-        bibliothek.printStock();
+        Set<Medium> mediums = bibliothek.getMediums();
+        System.out.println("-----------------------------------------------------------------------------------------");
+        for (Medium medium : mediums) {
+            System.out.println(medium.generateInfoString());
+        }
+        System.out.println("-----------------------------------------------------------------------------------------");
     }
 
     private void login(String userId) {
@@ -99,8 +106,19 @@ public class BibliothekConsole {
         System.out.println("Logout successful");
     }
 
+    private void lendMedium(int mediumId) {
+
+    }
+
     private void evaluate(String line) {
-        // lend, return, quit, help, list, login, logout, (register member)
+        // lend
+        // return
+        // -> quit
+        // -> help
+        // list
+        // -> login
+        // -> logout
+        // (register member)
         String[] tokens = line.split(" ");
         String command = tokens[0].toLowerCase();
 

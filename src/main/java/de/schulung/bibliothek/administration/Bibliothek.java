@@ -38,6 +38,10 @@ public class Bibliothek {
         return members.add(member);
     }
 
+    public Set<Medium> getMediums() {
+        return mediums;
+    }
+
     public boolean removeMember(Member member) {
         return members.remove(member);
     }
