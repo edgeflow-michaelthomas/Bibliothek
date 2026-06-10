@@ -39,4 +39,9 @@ public class Book extends Medium {
                 ", isAvailable=" + isAvailable +
                 '}';
     }
+
+    @Override
+    public String generateInfoString() {
+        return super.generateInfoString() + ", Author: " + author + ", Pages: " + pages + ", ISBN: " + isbn;
+    }
 }

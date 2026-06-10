@@ -19,7 +19,6 @@ public class Dvd extends Medium {
     public int getLength() {
         return length;
     }
-
     @Override
     public String toString() {
         return "Dvd{" +
@@ -31,5 +30,11 @@ public class Dvd extends Medium {
                 ", length=" + length +
                 ", isAvailable=" + isAvailable +
                 '}';
+    }
+
+
+    @Override
+    public String generateInfoString() {
+        return super.generateInfoString() + ", Director: " + director + ", Length: " + length;
     }
 }

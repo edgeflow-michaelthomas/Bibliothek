@@ -41,4 +41,8 @@ public abstract class Medium {
     public void setAvailable(boolean available) {
         isAvailable = available;
     }
+
+    public String generateInfoString() {
+        return "ID: " + getId() + ", Available: " + isAvailable() + ", Type: " + getClass().getSimpleName() + ", Title: " + getTitle() + ", Language: " + getLanguage() + ", Year: " + getYear();
+    }
 }
